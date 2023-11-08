@@ -27,7 +27,7 @@ class WinningLottoController {
     private fun checkLottoResult(otherLotto: Lotto): WinningPrize {
         val matchedNumbers = getMatchedNumberSet(otherLotto)
         winningLottoView.showMatchedNumbersWith(matchedNumbers)
-        return WinningPrizeController.getPrize(matchedNumbers)
+        return WinningPrizeController.getPrize(matchedNumbers.size)
     }
 
     /**
