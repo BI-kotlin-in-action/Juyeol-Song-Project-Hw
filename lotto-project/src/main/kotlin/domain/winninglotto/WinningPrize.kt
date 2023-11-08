@@ -1,4 +1,4 @@
-package winninglotto
+package domain.winninglotto
 
 /**
  * @author : Unagi_zoso
