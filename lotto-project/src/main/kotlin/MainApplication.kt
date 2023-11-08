@@ -1,5 +1,9 @@
-import user.User
-import winninglotto.WinningLotto.winningLotto
+import controller.lotto.LottoController
+import controller.winninglotto.WinningLottoController
+import domain.user.User
+import domain.winninglotto.WinningLotto.winningLotto
+import view.lotto.LottoView
+import view.user.UserView
 
 /**
  * @author : Unagi_zoso
@@ -8,20 +12,25 @@ import winninglotto.WinningLotto.winningLotto
 
 /**
  * 로또 구매 상황 테스트
- * 1. 사용자에게 구매 금액을 입력받는다.
- * 2. 입력받은 금액으로 로또를 구매한다.
- * 3. 소유한 로또 내용을 출력한다.
- * 4. 당첨 번호를 출력한다. (싱글톤 객체로 처음 생성될 때 자동으로 번호가 생성된다.)
- * 5. 당첨 번호와 구매한 로또를 비교하여 당첨 결과를 출력한다.
- * 6. 당첨 결과를 통해 수익률을 계산하여 출력한다.
+ * 1. 사용자 생성 시 초기금액을 입력 받는다.
+ * 2. 로또를 구매한다.
+ * 3. 구매한 로또를 출력한다.
+ * 4. 당첨 번호를 출력한다.
+ * 5. 당첨 번호와 구매한 로또를 비교하여 결과와 당첨금을 출력한다.
+ * 6. 최종 수익률을 출력한다.
  */
 fun main() {
     val user = User()
-    user.buyLottos()
-    user.showAllLottos()
+    val lottoController = LottoController()
+    val winningLottoController = WinningLottoController()
+    val userView = UserView()
+    val lottoView = LottoView()
 
-    winningLotto.showLottoNumbers(prefix = "Winning : ")
-    user.checkAllLottos()
+    lottoController.buyLottos(user)
+    userView.showAllLottosWithOrder(user)
 
-    user.showEarnedMoney()
+    lottoView.showLottoNumbers(winningLotto, prefix = "Winning : ")
+    winningLottoController.checkAllLottos(user)
+
+    userView.showEarnedMoney(user)
 }
