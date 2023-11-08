@@ -1,7 +1,6 @@
 package controller.winninglotto
 
 import domain.winninglotto.WinningPrize
-import java.util.SortedSet
 
 /**
  * @author : Unagi_zoso
@@ -10,8 +9,8 @@ import java.util.SortedSet
 
 class WinningPrizeController {
     companion object Convertor {
-        fun getPrize(matchedNumbers: SortedSet<Int>): WinningPrize {
-            return when (matchedNumbers.size) {
+        fun getPrize(numOfMatchedNumbers: Int): WinningPrize {
+            return when (numOfMatchedNumbers) {
                 6 -> WinningPrize.FIRST
                 5 -> WinningPrize.SECOND
                 4 -> WinningPrize.THIRD
