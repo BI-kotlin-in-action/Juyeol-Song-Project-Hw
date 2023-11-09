@@ -1,9 +1,13 @@
 package controller.lotto
 
+import domain.lottogenerator.LottoGenerator.Companion.generateOneLotto
 import domain.user.User
 import domain.winninglotto.WinningLotto.getMatchedNumbersList
 import domain.winninglotto.WinningLotto.winningLotto
 import domain.winninglotto.WinningPrize.Converter.convertToPrizeList
+import utils.lottomachine.AutomaticLottoMachineStrategy
+import utils.lottomachine.LottoMachineStrategy.Constants.COST_OF_ONE_LOTTO
+import utils.lottomachine.ManualLottoMachineStrategy
 import view.lotto.LottoView
 import view.lottomachine.ManualLottoMachineView
 import view.user.UserView
@@ -15,11 +19,6 @@ import view.winninglotto.WinningLottoView
  */
 
 class LottoController {
-    private val userView = UserView()
-    private val lottoView = LottoView()
-    private val manualLottoMachineView = ManualLottoMachineView()
-    private val winningLottoView = WinningLottoView()
-
     /**
      * user가 처음 가지는 돈을 입력 받아 user를 생성한다.
      * user가 직접 작성할 로또의 수를 입력 받고 lotto를 구매한다.
@@ -31,12 +30,14 @@ class LottoController {
      * user가 가지고 있는 돈을 출력한다.
      */
     fun start() {
+        val userView = UserView()
+        val lottoView = LottoView()
+        val winningLottoView = WinningLottoView()
+
         val startMoney = userView.inputStartMoneyWithValidation()
         val user = User(currentMoney = startMoney)
 
-        val numOfManuals = manualLottoMachineView.inputNumOfManualWithValidation(user.maxNumOfLottos)
-        user.buyManualAndAutonomousLottos(numOfManuals)
-
+        buyLottos(user)
         userView.showAllLottosWithOrder(user)
 
         lottoView.showLottoNumbers(winningLotto, prefix = "Winning : ")
@@ -44,7 +45,27 @@ class LottoController {
         val matchedNumbersList = getMatchedNumbersList(user)
         winningLottoView.showResultsOfAllLottos(matchedNumbersList)
 
-        user.receiveAllPrizeAmount(convertToPrizeList(matchedNumbersList))
+        user.receiveAllPrizeAmount(convertToPrizeList(matchedNumbersList.map { it.size }))
         userView.showEarnedMoney(user)
+    }
+
+    /**
+     * LottoController를 작성하며
+     * 반복되는 로직은 없지만 코드가 길어지고 의미있는 단위로 묶을 수도 있을 것 같은데
+     * 가독성의 관점에서 LottoController.start() 내부의 코드를 함수로 나눠도 괜찮을까요?
+     * 예 ) LottoController.buyLottos() 에선 로또 구매하는 행위를 정의한다.
+     */
+    private fun buyLottos(user: User) {
+        val manualLottoMachineView = ManualLottoMachineView()
+
+        user.currentMoney %= COST_OF_ONE_LOTTO
+        val numOfManuals = manualLottoMachineView.inputNumOfManualWithValidation(user.maxNumOfLottos)
+        repeat(numOfManuals) {
+            val manualNumbers = manualLottoMachineView.inputManualNumbersWithValidation()
+            user.addLotto(generateOneLotto(manualNumbers, ManualLottoMachineStrategy::generateLotto))
+        }
+        repeat(user.maxNumOfLottos - numOfManuals) {
+            user.addLotto(generateOneLotto(lottoMachineStrategy = AutomaticLottoMachineStrategy::generateLotto))
+        }
     }
 }
