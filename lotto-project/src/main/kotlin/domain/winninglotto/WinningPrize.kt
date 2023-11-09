@@ -1,7 +1,5 @@
 package domain.winninglotto
 
-import java.util.SortedSet
-
 /**
  * @author : Unagi_zoso
  * @date : 2023-11-07
@@ -30,10 +28,10 @@ enum class WinningPrize(val level: String, val prizeAmount: Int) {
         }
 
         /**
-         * 당첨 번호와 일치하는 번호들의 리스트를 당첨 보상 (WinningPrize) 리스트로 반환한다.
+         * 당첨 번호와 일치하는 정도(size)들의 리스트를 당첨 보상 (WinningPrize) 리스트로 반환한다.
          */
-        fun convertToPrizeList(matchedNumbersList: List<SortedSet<Int>>): List<WinningPrize> {
-            return matchedNumbersList.map { getPrize(it.size) }
+        fun convertToPrizeList(matchedSizeList: List<Int>): List<WinningPrize> {
+            return matchedSizeList.map(::getPrize)
         }
     }
 }
