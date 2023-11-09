@@ -15,7 +15,6 @@ build.gradle.kts
 gradle.properties
 gradlew.bat
 settings.gradle.kts
-.gradle
 
 ### Eclipse ###
 .apt_generated
