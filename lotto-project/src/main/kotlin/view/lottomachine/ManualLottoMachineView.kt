@@ -9,7 +9,6 @@ import java.util.SortedSet
  * @author : Unagi_zoso
  * @date : 2023-11-08
  */
-
 class ManualLottoMachineView {
     /**
      * 직접 생성할 로또의 수를 유효성 검사와 함께 입력 받는다.
@@ -47,7 +46,6 @@ class ManualLottoMachineView {
      * 직접 작성할 로또의 수가 최대 구매 가능 수를 넘어가면 다시 입력받는다.
      * 직접 작성할 로또의 수가 0보다 작으면 다시 입력받는다.
      */
-
     fun inputNumOfManualWithValidation(maxNumOfLottos: Int): Int {
         println("최대 구매 가능 수 : $maxNumOfLottos  직접 작성할 로또의 수를 정해주세요.")
         var numOfManual = 0
