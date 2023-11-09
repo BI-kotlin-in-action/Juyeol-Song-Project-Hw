@@ -1,11 +1,8 @@
 package domain.user
 
 import domain.lotto.Lotto
-import domain.lottogenerator.LottoGenerator.Companion.generateLottos
 import domain.winninglotto.WinningPrize
-import utils.lottomachine.AutomaticLottoMachineStrategy
 import utils.lottomachine.LottoMachineStrategy.Constants.COST_OF_ONE_LOTTO
-import utils.lottomachine.ManualLottoMachineStrategy
 
 /**
  * @author : Unagi_zoso
@@ -15,19 +12,15 @@ data class User(
     var currentMoney: Int,
     var earnedMoney: Int = 0,
     val maxNumOfLottos: Int = currentMoney / COST_OF_ONE_LOTTO,
-    val lottos: MutableList<Lotto> = mutableListOf(),
 ) {
-    /**
-     * 1. 전재산을 털어 로또를 삽니다.
-     * 2. 수동으로 구매할 로또의 개수를 입력받습니다.
-     * 3. 수동으로 구매할 로또의 개수만큼 로또를 생성합니다.
-     * 4. 나머지는 자동으로 생성합니다.
-     */
-    fun buyManualAndAutonomousLottos(numOfManuals: Int) {
-        currentMoney %= COST_OF_ONE_LOTTO
+    private val lottos: MutableList<Lotto> = mutableListOf()
 
-        lottos += generateLottos(ManualLottoMachineStrategy::generateLotto, numOfManuals)
-        lottos += generateLottos(AutomaticLottoMachineStrategy::generateLotto, maxNumOfLottos - numOfManuals)
+    fun addLotto(lotto: Lotto) {
+        lottos.add(lotto)
+    }
+
+    fun getLottos(): List<Lotto> {
+        return lottos
     }
 
     /**
