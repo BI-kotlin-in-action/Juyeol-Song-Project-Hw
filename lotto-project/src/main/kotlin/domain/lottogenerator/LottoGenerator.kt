@@ -1,7 +1,6 @@
 package domain.lottogenerator
 
 import domain.lotto.Lotto
-import java.util.SortedSet
 
 /**
  * @author : Unagi_zoso
@@ -20,8 +19,9 @@ class LottoGenerator {
         /**
          * strategy에 따라 로또를 생성해 반환합니다.
          */
-        fun generateOneLotto(manualNumbers: SortedSet<Int>? = null, lottoMachineStrategy: (SortedSet<Int>?) -> Lotto): Lotto {
-            return lottoMachineStrategy(manualNumbers)
+        @JvmStatic
+        fun generateOneLotto(lottoMachineStrategy: () -> Lotto): Lotto {
+            return lottoMachineStrategy()
         }
     }
 }
