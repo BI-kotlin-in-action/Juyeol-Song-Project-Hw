@@ -11,6 +11,11 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 gradlew
+build.gradle.kts
+gradle.properties
+gradlew.bat
+settings.gradle.kts
+.gradle
 
 ### Eclipse ###
 .apt_generated
@@ -38,3 +43,5 @@ bin/
 .DS_Store
 
 Lotto.iml
+
+.gitignore
