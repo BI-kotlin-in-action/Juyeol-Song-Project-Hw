@@ -61,11 +61,10 @@ class LottoController {
         user.currentMoney %= COST_OF_ONE_LOTTO
         val numOfManuals = manualLottoView.inputNumOfManualWithValidation(user.maxNumOfLottos)
         repeat(numOfManuals) {
-            val manualNumbers = manualLottoView.inputManualNumbersWithValidation()
-            user.addLotto(generateOneLotto(manualNumbers, ManualLottoMachineStrategy::generateLotto))
+            user.addLotto(generateOneLotto(ManualLottoMachineStrategy::generateLotto))
         }
         repeat(user.maxNumOfLottos - numOfManuals) {
-            user.addLotto(generateOneLotto(lottoMachineStrategy = AutomaticLottoMachineStrategy::generateLotto))
+            user.addLotto(generateOneLotto(AutomaticLottoMachineStrategy::generateLotto))
         }
     }
 }
