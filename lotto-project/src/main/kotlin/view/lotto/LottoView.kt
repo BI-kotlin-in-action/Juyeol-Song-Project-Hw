@@ -11,6 +11,6 @@ class LottoView {
      * 로또 번호를 출력한다.
      */
     fun showLottoNumbers(lotto: Lotto, prefix: String = "", postfix: String = "\n") {
-        print("$prefix${lotto.numbers.joinToString()}$postfix")
+        print("$prefix${lotto.getNumbers().joinToString()}$postfix")
     }
 }
