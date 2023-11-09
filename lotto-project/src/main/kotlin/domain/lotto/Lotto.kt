@@ -8,7 +8,8 @@ import java.util.SortedSet
  * 로또 번호를 가지고 있다. (private val SortedSet)
  * 접근 시 getNumbers() 메서드를 통해 Set으로 반환한다.
  */
-data class Lotto(private val numbers: SortedSet<Int>) {
+@JvmInline
+value class Lotto(private val numbers: SortedSet<Int>) {
     fun getNumbers(): Set<Int> {
         return numbers
     }
