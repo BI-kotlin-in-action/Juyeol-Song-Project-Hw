@@ -1,7 +1,7 @@
 package utils.lottomachine
 
 import domain.lotto.Lotto
-import view.lottomachine.ManualLottoMachineView
+import java.util.SortedSet
 
 /**
  * @author : Unagi_zoso
@@ -9,13 +9,11 @@ import view.lottomachine.ManualLottoMachineView
  */
 class ManualLottoMachineStrategy {
     companion object : LottoMachineStrategy {
-        private val manualLottoMachineView = ManualLottoMachineView()
-
         /**
-         * 직접 로또 번호를 골라 로또를 생성한다
+         * 외부로부터 번호를 주입 받아 로또를 생성한다
          */
-        override fun generateLotto(): Lotto {
-            return Lotto(manualLottoMachineView.inputManualNumbersWithValidation())
+        override fun generateLotto(numbers: SortedSet<Int>?): Lotto {
+            return Lotto(numbers ?: throw IllegalArgumentException("로또 번호를 입력해주세요."))
         }
     }
 }
