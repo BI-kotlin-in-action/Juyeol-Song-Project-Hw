@@ -1,19 +1,24 @@
 package utils.lottomachine
 
 import domain.lotto.Lotto
-import java.util.SortedSet
+import view.manuallotto.ManualLottoView
 
 /**
  * @author : Unagi_zoso
  * @date : 2023-11-06
  */
+
 class ManualLottoMachineStrategy {
     companion object : LottoMachineStrategy {
+        @JvmStatic
+        private var manualLottoView = ManualLottoView()
+
         /**
          * 외부로부터 번호를 주입 받아 로또를 생성한다
          */
-        override fun generateLotto(numbers: SortedSet<Int>?): Lotto {
-            return Lotto(numbers ?: throw IllegalArgumentException("로또 번호를 입력해주세요."))
+        @JvmStatic
+        override fun generateLotto(): Lotto {
+            return Lotto(manualLottoView.inputManualNumbersWithValidation())
         }
     }
 }
