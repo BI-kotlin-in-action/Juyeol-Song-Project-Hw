@@ -1,7 +1,7 @@
 package view.user
 
-import domain.lottomachine.LottoMachineStrategy.Constants.COST_OF_ONE_LOTTO
 import domain.user.User
+import utils.lottomachine.LottoMachineStrategy.Constants.COST_OF_ONE_LOTTO
 
 /**
  * @author : Unagi_zoso
