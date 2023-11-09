@@ -15,8 +15,8 @@ class UserView {
      */
     fun showAllLottosWithOrder(user: User) {
         println("\n고객님의 로또를 조회합니다.")
-        user.lottos.forEachIndexed { index, lotto ->
-            println("${index + 1} : " + lotto.numbers.sorted().joinToString(" "))
+        user.getLottos().forEachIndexed { index, lotto ->
+            println("${index + 1} : " + lotto.getNumbers().sorted().joinToString(" "))
         }
     }
 
