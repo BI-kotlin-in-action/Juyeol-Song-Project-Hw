@@ -1,4 +1,4 @@
-package view.lottomachine
+package view.manuallotto
 
 import domain.lotto.Lotto.Constants.MAX_LOTTO_NUMBER
 import domain.lotto.Lotto.Constants.MIN_LOTTO_NUMBER
@@ -9,7 +9,7 @@ import java.util.SortedSet
  * @author : Unagi_zoso
  * @date : 2023-11-08
  */
-class ManualLottoMachineView {
+class ManualLottoView {
     /**
      * 직접 생성할 로또의 수를 유효성 검사와 함께 입력 받는다.
      * 입력 받은 수가 유효하면 입력 받은 수를 반환한다.
