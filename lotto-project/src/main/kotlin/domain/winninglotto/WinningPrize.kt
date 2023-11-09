@@ -1,5 +1,7 @@
 package domain.winninglotto
 
+import java.util.SortedSet
+
 /**
  * @author : Unagi_zoso
  * @date : 2023-11-07
@@ -14,5 +16,24 @@ enum class WinningPrize(val level: String, val prizeAmount: Int) {
     SECOND("2등", 5_000),
     THIRD("3등", 100),
     FOURTH("4등", 5),
-    NOPE("낙", 0),
+    NOPE("낙", 0), ;
+
+    companion object Converter {
+        fun getPrize(numOfMatchedNumbers: Int): WinningPrize {
+            return when (numOfMatchedNumbers) {
+                6 -> FIRST
+                5 -> SECOND
+                4 -> THIRD
+                3 -> FOURTH
+                else -> NOPE
+            }
+        }
+
+        /**
+         * 당첨 번호와 일치하는 번호들의 리스트를 당첨 보상 (WinningPrize) 리스트로 반환한다.
+         */
+        fun convertToPrizeList(matchedNumbersList: List<SortedSet<Int>>): List<WinningPrize> {
+            return matchedNumbersList.map { getPrize(it.size) }
+        }
+    }
 }
