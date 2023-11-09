@@ -9,7 +9,7 @@ import utils.lottomachine.AutomaticLottoMachineStrategy
 import utils.lottomachine.LottoMachineStrategy.Constants.COST_OF_ONE_LOTTO
 import utils.lottomachine.ManualLottoMachineStrategy
 import view.lotto.LottoView
-import view.lottomachine.ManualLottoMachineView
+import view.manuallotto.ManualLottoView
 import view.user.UserView
 import view.winninglotto.WinningLottoView
 
@@ -56,12 +56,12 @@ class LottoController {
      * 예 ) LottoController.buyLottos() 에선 로또 구매하는 행위를 정의한다.
      */
     private fun buyLottos(user: User) {
-        val manualLottoMachineView = ManualLottoMachineView()
+        val manualLottoView = ManualLottoView()
 
         user.currentMoney %= COST_OF_ONE_LOTTO
-        val numOfManuals = manualLottoMachineView.inputNumOfManualWithValidation(user.maxNumOfLottos)
+        val numOfManuals = manualLottoView.inputNumOfManualWithValidation(user.maxNumOfLottos)
         repeat(numOfManuals) {
-            val manualNumbers = manualLottoMachineView.inputManualNumbersWithValidation()
+            val manualNumbers = manualLottoView.inputManualNumbersWithValidation()
             user.addLotto(generateOneLotto(manualNumbers, ManualLottoMachineStrategy::generateLotto))
         }
         repeat(user.maxNumOfLottos - numOfManuals) {
