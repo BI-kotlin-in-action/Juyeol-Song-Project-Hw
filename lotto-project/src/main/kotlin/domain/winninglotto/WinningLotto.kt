@@ -17,19 +17,19 @@ import java.util.SortedSet
  * 당첨 번호를 생성하고, 당첨 번호와 비교하여 당첨 결과를 반환한다.
  */
 object WinningLotto {
-    val winningLotto = generateOneLotto(AutomaticLottoMachineStrategy::generateLotto)
+    val winningLotto = generateOneLotto(null, AutomaticLottoMachineStrategy::generateLotto)
 
     /**
      * otherLotto와 당첨 번호를 비교하여 일치하는 번호를 SortedSet으로 반환한다.
      */
     private fun getMatchedNumberSet(otherLotto: Lotto): SortedSet<Int> {
-        return (winningLotto.numbers intersect otherLotto.numbers).toSortedSet()
+        return (winningLotto.getNumbers() intersect otherLotto.getNumbers()).toSortedSet()
     }
 
     /**
      * user가 가진 모든 로또를 각 각 당첨 번호와 비교해 일치하는 번호들을 반환한다.
      */
     fun getMatchedNumbersList(user: User): List<SortedSet<Int>> {
-        return user.lottos.map(::getMatchedNumberSet)
+        return user.getLottos().map(::getMatchedNumberSet)
     }
 }
