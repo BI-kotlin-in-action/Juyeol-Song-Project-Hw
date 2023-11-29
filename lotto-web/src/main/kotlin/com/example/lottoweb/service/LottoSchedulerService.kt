@@ -1,7 +1,6 @@
 package com.example.lottoweb.service
 
 import com.example.lottoweb.domain.LottoJob
-import com.example.lottoweb.domain.LottoJobMessage
 import com.example.lottoweb.domain.LottoJobMessageQueuePool.Companion.getQueueByRound
 import org.springframework.scheduling.annotation.EnableScheduling
 import org.springframework.scheduling.annotation.Scheduled
@@ -30,22 +29,19 @@ class LottoSchedulerService(
 ) {
     @Scheduled(fixedDelay = 10 * 60 * 1000, initialDelay = 10 * 60 * 1000)
     fun scheduledFunction() {
+        // 현재 회차를 캡쳐하자마자 다음 회차로 증가시킴
         val capturedCurrentRound = lottoRoundControlService.getLottoRound()
-        val winningRecordThisRound = winningRecordService.generateNewWinningRecord(capturedCurrentRound)
+        lottoRoundControlService.increaseRound()
 
-        val queue = getQueueByRound(capturedCurrentRound)
+        val winningRecordThisRound = winningRecordService.generateNewWinningRecord(capturedCurrentRound)
 
         // 이번 회차의 모든 로또 구매 작업이 끝날 때까지 대기
         while (queueWorkingCounterService.isNotCounterZero(capturedCurrentRound)) {}
 
         // 이번 회차 queue 에 있는 모든 메시지를 처리
-        var message: LottoJobMessage
-        while (queue.isNotEmpty()) {
-            message = queue.poll()
+        for (message in getQueueByRound(capturedCurrentRound)) {
             val lottoJob = LottoJob.from(message.message)
             resultRecordService.processResultRecords(lottoJob, winningRecordThisRound)
         }
-
-        lottoRoundControlService.increaseRound()
     }
 }
