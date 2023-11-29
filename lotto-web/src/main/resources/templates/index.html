@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+    <meta charset="UTF-8">
+    <title>로또 페이지</title>
+    <link rel="stylesheet" type="text/css" href="/index.css">
+</head>
+<body>
+<div id="toast" class="toast"></div>
+<div>
+    <a th:href="@{/logout}">로그아웃</a>
+</div>
+<div>
+    <label for="withdraw">금액 인출:</label>
+    <input type="text" id="withdraw" name="withdraw"/>
+    <button onclick="executeThenDelay(withdraw, isRunningWithdraw)">금액 인출</button>
+</div>
+<div>
+    <label for="deposit">금액 입금:</label>
+    <input type="text" id="deposit" name="deposit"/>
+    <button onclick="executeThenDelay(deposit, isRunningDeposit)">금액 입금</button>
+</div>
+
+<div>
+    <p id="balance-view">현재 금액: </p>
+</div>
+
+<br>
+<p> 로또 한 장 100 카카오원 ! 싸다 싸 ~!</p>
+<br>
+<br>
+<div>
+    <p>로또 번호는 1 ~ 45 사이의 6개 숫자로 ' '(빈칸)으로 구분해 주세요. </p>
+    <br>
+    <label for="numOfManual">수동로또 입력 개수:</label>
+    <input type="text" id="numOfManual" name="numOfManual"/>
+    <button type="button" onclick="addManualLottoInputs()">입력란 추가</button>
+</div>
+
+<div id="manualLottoInputs" class="manualLottoInputs">
+</div>
+
+<div>
+    <label for="numOfAuto">자동로또 개수:</label>
+    <input type="text" id="numOfAuto" name="numOfAuto"/>
+</div>
+
+<div>
+    <button onclick="executeThenDelay(buyLottos, isRunningBuyLotto)">구매</button>
+</div>
+
+<div>
+    <label for="selectLottoRoundForLottoRecords">조회 회차: </label>
+    <select id="selectLottoRoundForLottoRecords" required>
+        <option value="1">1</option>
+    </select>
+    <br>
+    <label for="selectUsernameForLottoRecords">조회 유저 이름:</label>
+    <input type="text" id="selectUsernameForLottoRecords" name="selectUsernameForLottoRecords"/>
+</div>
+<div>
+    <button onclick="executeThenDelay(getLottoHistory, isRunningGetLottoRecords)">조회하기</button>
+</div>
+
+<div id="lottoRecordsContainer">
+</div>
+
+<div>
+    <label for="selectLottoRound">조회 회차: </label>
+    <select id="selectLottoRound" required>
+    </select>
+    <br>
+    <label for="selectUsername">조회 유저 이름:</label>
+    <input type="text" id="selectUsername" name="selectUsername"/>
+</div>
+<div>
+    <button onclick="executeThenDelay(getLottoResults, isRunningGetLottoQueriedResults)">조회하기</button>
+</div>
+
+<div id="winningLottoInfo">
+</div>
+<div id="lottoResultsContainer">
+</div>
+
+</body>
+<script src="/index.js"></script>
+<script src="/financeApi.js"></script>
+<script src="/lottoApi.js"></script>
+</html>
