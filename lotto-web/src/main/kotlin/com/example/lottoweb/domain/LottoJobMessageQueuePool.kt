@@ -16,8 +16,7 @@ class LottoJobMessageQueuePool() {
         @JvmStatic
         val QUEUE_POOL_SIZE = 100
 
-        @JvmStatic
-        val queuePool = List<LinkedList<LottoJobMessage>>(QUEUE_POOL_SIZE) { LinkedList() }
+        private val queuePool = List<LinkedList<LottoJobMessage>>(QUEUE_POOL_SIZE) { LinkedList() }
 
         @JvmStatic
         fun getQueueIndexByRound(round: Int) = (round % QUEUE_POOL_SIZE)
