@@ -73,7 +73,7 @@ function deposit() {
             // money 값을 0으로 만들어줌
             moneyInput.value = 0;
         })
-        .catch(error => {
+        .catch(() => {
         });
 }
 
