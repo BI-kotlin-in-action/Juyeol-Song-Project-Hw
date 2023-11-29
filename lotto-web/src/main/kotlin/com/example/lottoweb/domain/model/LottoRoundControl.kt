@@ -9,9 +9,6 @@ import jakarta.persistence.Id
  */
 // 로또의 최신화 되는 현재 회차를 관리하는 테이블
 // 테이블에는 하나의 레코드만이 시스템 시작 시 들어가게 됩니다.
-/**
- * @see com.example.lottoweb.service.LottoRoundInitializer
- */
 @Entity(name = "lotto_round_control")
 data class LottoRoundControl(
     @Id
