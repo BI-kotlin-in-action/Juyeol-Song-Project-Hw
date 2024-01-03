@@ -1,11 +1,12 @@
 package com.example.lottoweb.service
 
-import com.example.lottoweb.domain.AutomaticLottoNumberGenerator
+import com.example.lottoweb.domain.RandomLottoNumberGenerator
 import com.example.lottoweb.domain.model.WinningRecord
 import com.example.lottoweb.dto.AvailableRoundResponse
 import com.example.lottoweb.dto.WinningRecordResponse
 import com.example.lottoweb.repository.WinningRecordRepository
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 /**
  * @author Unagi_zoso
@@ -16,12 +17,13 @@ class WinningRecordService(
     private val winningRecordRepository: WinningRecordRepository,
     private val lottoRoundControlService: LottoRoundControlService,
 ) {
+    @Transactional
     fun generateNewWinningRecord(currentRound: Int): WinningRecord {
         return winningRecordRepository.save(
             WinningRecord(
                 winningRecordId = 0,
                 round = currentRound,
-                numbersAsString = AutomaticLottoNumberGenerator.generateAutoLottoNumbers().getNumbersAsString(),
+                lottoNumbers = RandomLottoNumberGenerator.generateRandomLottoNumbers(),
             ),
         )
     }
@@ -32,8 +34,5 @@ class WinningRecordService(
     }
 
     // 조회할 수 있는 회차는 현재 회차의 이전 회차 (현재 회차는 당첨 번호가 아직 나오지 않았으므로)
-    fun getMaxAvailableRound() =
-        AvailableRoundResponse(
-            lottoRoundControlService.getAvailableRound(),
-        )
+    fun getMaxAvailableRound() = AvailableRoundResponse(lottoRoundControlService.getMaxAvailableRound())
 }
