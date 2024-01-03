@@ -77,5 +77,4 @@ function deposit() {
         });
 }
 
-
 setInterval(getBalance, 1000)
