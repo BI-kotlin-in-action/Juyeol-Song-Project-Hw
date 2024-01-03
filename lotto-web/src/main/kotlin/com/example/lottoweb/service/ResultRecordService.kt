@@ -9,8 +9,8 @@ import com.example.lottoweb.dto.LottoResultsResponse
 import com.example.lottoweb.exception.UsernameNotFoundException
 import com.example.lottoweb.repository.ResultRecordRepository
 import jakarta.transaction.Transactional
-import org.springframework.stereotype.Service
 import java.util.SortedSet
+import org.springframework.stereotype.Service
 
 /**
  * @author Unagi_zoso
@@ -23,7 +23,7 @@ class ResultRecordService(
 ) {
     @Transactional
     fun processResultRecords(lottoJob: LottoJob, winningRecordThisRound: WinningRecord) {
-        val matchedNumberSet = getMatchedNumberSet(lottoJob.numbers, LottoNumbers.from(winningRecordThisRound.numbersAsString))
+        val matchedNumberSet = getMatchedNumberSet(lottoJob.numbers, winningRecordThisRound.lottoNumbers)
         val winningPrize = getPrize(matchedNumberSet.size)
         val user = userService.findUserByUsername(lottoJob.username)
 
