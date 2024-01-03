@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional
  * @since 2023-11-27
  */
 // 로또 전체 회차를 관리하는 서비스
-@Transactional
 @Service
 class LottoRoundControlService(
     private val lottoRoundControlRepository: LottoRoundControlRepository,
@@ -17,12 +16,13 @@ class LottoRoundControlService(
     fun getLottoRound() =
         lottoRoundControlRepository.findLottoRoundControlByLottoRoundControlId(0).round
 
+    @Transactional
     fun increaseRound() {
-        val round = lottoRoundControlRepository.findLottoRoundControlByLottoRoundControlId(0)
-        round.increaseRound()
+        val roundControl = lottoRoundControlRepository.findLottoRoundControlByLottoRoundControlId(0)
+        roundControl.increaseRound()
     }
 
     // 조회 가능한 회차를 반환한다.
-    fun getAvailableRound() =
-        lottoRoundControlRepository.findLottoRoundControlByLottoRoundControlId(0).round - 1
+    fun getMaxAvailableRound() =
+        getLottoRound() - 1
 }
