@@ -7,7 +7,7 @@ import com.example.lottoweb.domain.LottoNumbers.Companion.numbersOneToFortyFive
  * @author Unagi_zoso
  * @since 2023-11-06
  */
-class AutomaticLottoNumberGenerator {
+class RandomLottoNumberGenerator {
     companion object {
         /**
          * 자동 로또를 생성하여 반환
@@ -16,7 +16,7 @@ class AutomaticLottoNumberGenerator {
          * DB에 저장될 것을 고려해 LottoNumbers를 String으로 변환하여 Lotto를 생성한다.
          */
         @JvmStatic
-        fun generateAutoLottoNumbers() = LottoNumbers(
+        fun generateRandomLottoNumbers() = LottoNumbers(
             numbers =
             numbersOneToFortyFive
                 .shuffled()
