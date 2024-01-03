@@ -89,7 +89,7 @@ function getLottoResults() {
     getWinningLottoInfo();
     const round = document.getElementById("selectLottoRound").value;
     const username = document.getElementById("selectUsername").value;
-    fetch("/api/result-records" + "/username/" + username + "?round=" + round, {
+    fetch("/api/result-records" + "?username=" + username + "&round=" + round, {
         method: "GET",
         credentials: "include",
         headers: {
@@ -132,7 +132,7 @@ function addLottoResults(lottoResults) {
 function getLottoHistory() {
     const round = document.getElementById("selectLottoRoundForLottoRecords").value;
     const username = document.getElementById("selectUsernameForLottoRecords").value;
-    fetch("/api/lotto-records/" + "username/" + username + "?round=" + round, {
+    fetch("/api/lotto-records" + "?username=" + username + "&round=" + round, {
         method: "GET",
         credentials: "include",
         headers: {
