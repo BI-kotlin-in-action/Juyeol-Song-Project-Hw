@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus
 /**
  * @see com.example.lottoweb.utils.validator.LottoBuyRequestValidator
  */
-class InvalidLottoBuyRequestException(
+class InvalidLottoNumbersException(
     val statusCode: HttpStatus = HttpStatus.BAD_REQUEST,
     override val message: String = "로또 번호를 확인해주세요.",
 ) : RuntimeException()
