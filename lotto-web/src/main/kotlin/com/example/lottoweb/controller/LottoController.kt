@@ -1,15 +1,14 @@
 package com.example.lottoweb.controller
 
 import com.example.lottoweb.dto.LottoBuyRequest
-import com.example.lottoweb.service.LottoService
-import com.example.lottoweb.utils.annotation.CoolDown
+import com.example.lottoweb.service.LottoBuyService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus.CREATED
-import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 
 /**
@@ -19,17 +18,14 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/lottos")
 @RestController
 class LottoController(
-    private val lottoService: LottoService,
+    private val lottoBuyService: LottoBuyService,
 ) {
-    @CoolDown()
-    @PostMapping()
+    @ResponseStatus(CREATED)
+    @PostMapping
     fun buyLotto(
         @Valid
         @RequestBody
         lottoBuyRequest: LottoBuyRequest,
         @AuthenticationPrincipal username: String,
-    ): ResponseEntity<Unit> {
-        lottoService.processLottoBuyRequest(lottoBuyRequest, username)
-        return ResponseEntity(CREATED)
-    }
+    ) = lottoBuyService.processLottoBuyRequest(lottoBuyRequest, username)
 }
