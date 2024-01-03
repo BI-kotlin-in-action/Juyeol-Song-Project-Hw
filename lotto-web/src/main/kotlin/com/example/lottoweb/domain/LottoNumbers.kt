@@ -8,8 +8,8 @@ import java.util.SortedSet
  */
 // 로또 번호를 저장하는 클래스입니다. SortedSet으로 값을 담으며 ' '를 구분자로 사용하여 문자열로 변환할 수 있습니다.
 @JvmInline
-value class LottoNumbers(
-    val numbers: SortedSet<Int>,
+value class LottoNumbers (
+    private val numbers: SortedSet<Int>,
 ) {
     fun getNumbers(): Set<Int> {
         return numbers
@@ -30,6 +30,11 @@ value class LottoNumbers(
         @JvmStatic
         fun from(numbersAsString: String, separator: String = " ") = LottoNumbers(
             numbers = numbersAsString.split(separator).map { it.toInt() }.toSortedSet(),
+        )
+
+        @JvmStatic
+        fun from(numbers: List<Int>) = LottoNumbers(
+            numbers = numbers.toSortedSet(),
         )
     }
 }
