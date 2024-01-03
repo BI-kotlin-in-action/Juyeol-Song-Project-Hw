@@ -32,7 +32,7 @@ class SecurityConfig {
             .formLogin {
                 it
                     .loginPage("/loginform")
-                    .loginProcessingUrl("/login") // 왜 있는겨?
+                    .loginProcessingUrl("/login")
                     .defaultSuccessUrl("/", true)
             }
             .logout {
