@@ -1,25 +1,17 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_DATABASE}?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_DATABASE}?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
-
   jpa:
-    generate-ddl: true
+    generate-ddl: false
     hibernate:
-      ddl-auto: create-drop
-    properties:
-      hibernate:
-        hbm2ddl:
-          import_files: initial_data.sql
+      ddl-auto: none
     open-in-view: false
-
-  data:
-    redis:
-      host: ${REDIS_HOST}
-      port: ${REDIS_PORT}
+    show-sql: true
   mvc:
+    # HTML form이 지원하지 않는 delete, put 메소드를 사용하기 위해 설정
     hiddenmethod:
       filter:
         enabled: true
@@ -28,3 +20,11 @@ spring:
       password: 1 # 기본 패스워드 1로 고정
   config:
     import: dev-env.properties
+  sql:
+    init:
+      mode: always
+
+# 개발 환경 스케쥴 시간 설정 (10초)
+scheduledTask:
+  fixedDelay: 100000
+  initialDelay: 100000
