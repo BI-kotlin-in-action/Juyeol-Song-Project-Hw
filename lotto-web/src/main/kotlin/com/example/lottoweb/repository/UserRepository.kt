@@ -13,9 +13,5 @@ import org.springframework.data.jpa.repository.Query
 interface UserRepository : JpaRepository<User, Long> {
     fun findByUsername(username: String): User?
 
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
-    @Query("SELECT u FROM user u WHERE u.username = :username")
-    fun findByUsernameWithPessimisticLock(username: String): User?
-
     fun existsByUsername(username: String): Boolean
 }
