@@ -3,6 +3,7 @@ package com.example.lottoweb.domain.model
 import jakarta.persistence.Embeddable
 import jakarta.persistence.EmbeddedId
 import jakarta.persistence.Entity
+import jakarta.persistence.Version
 import java.io.Serializable
 
 /**
@@ -20,6 +21,8 @@ data class LottoRecord(
     val lottoRecordId: LottoRecordId? = null,
     val round: Int, // 회차
     val currentCounterOfThisRound: Long, // 이번 회차의 user의 몇 번째 로또인지
+    @Version
+    val version: Long = 0,
 )
 
 @Embeddable
