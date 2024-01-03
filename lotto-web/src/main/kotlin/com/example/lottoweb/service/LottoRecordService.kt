@@ -12,6 +12,7 @@ class LottoRecordService(
     private val lottoRecordRepository: LottoRecordRepository,
     private val userService: UserService,
 ) {
+    @Transactional
     fun saveLottoRecord(userId: Long, lottoId: Long, currentRound: Int, currentCounter: Long) {
         lottoRecordRepository.save(
             LottoRecord(
@@ -25,11 +26,10 @@ class LottoRecordService(
         )
     }
 
-    @Transactional
     fun findMaxLottoCounterByRoundAndUserId(currentRound: Int, userId: Long) =
         lottoRecordRepository.findMaxLottoCounterByRoundAndUserId(currentRound, userId) ?: 0L
 
-    @Transactional
+    // lazy loading을 사용하지 않기에 조회용 메소드엔 트랜잭션을 걸지 않았습니다. @Transactional(readOnly = true)라도 거는게 좋을까요/
     fun getLottoRecordsByUsernameAndRound(username: String, round: Int): LottoRecordsResponse {
         val userId = userService.findUserIdByUsername(username)
         val lottoRecordResponses = lottoRecordRepository.findByUserIdAndRound(userId, round)
