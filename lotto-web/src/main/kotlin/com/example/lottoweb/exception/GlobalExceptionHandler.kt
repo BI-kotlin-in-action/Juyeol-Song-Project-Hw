@@ -1,15 +1,12 @@
 package com.example.lottoweb.exception
 
-import com.example.lottoweb.exception.ResponseConstants.Companion.DUPLICATED_USERNAME
-import com.example.lottoweb.exception.ResponseConstants.Companion.FREQUENT_REQUEST
-import com.example.lottoweb.exception.ResponseConstants.Companion.INVALID_LOTTO_BUY_REQUEST
-import com.example.lottoweb.exception.ResponseConstants.Companion.LOGIN_MISSING
-import com.example.lottoweb.exception.ResponseConstants.Companion.NOT_ENOUGH_MONEY
-import com.example.lottoweb.exception.ResponseConstants.Companion.PASSWORD_NOT_MATCHED
-import com.example.lottoweb.exception.ResponseConstants.Companion.USERNAME_NOT_FOUND
-import jakarta.validation.ConstraintViolationException
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
+import com.example.lottoweb.exception.HttpErrorResponseConstants.Companion.DUPLICATED_USERNAME
+import com.example.lottoweb.exception.HttpErrorResponseConstants.Companion.INVALID_LOTTO_BUY_REQUEST
+import com.example.lottoweb.exception.HttpErrorResponseConstants.Companion.LOGIN_MISSING
+import com.example.lottoweb.exception.HttpErrorResponseConstants.Companion.NOT_ENOUGH_MONEY
+import com.example.lottoweb.exception.HttpErrorResponseConstants.Companion.PASSWORD_NOT_MATCHED
+import com.example.lottoweb.exception.HttpErrorResponseConstants.Companion.USERNAME_NOT_FOUND
+import org.hibernate.exception.ConstraintViolationException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
@@ -36,18 +33,15 @@ class GlobalExceptionHandler {
     @ExceptionHandler(NotEnoughMoneyException::class)
     fun handleNotEnoughMoneyException() = NOT_ENOUGH_MONEY
 
-    @ExceptionHandler(InvalidLottoBuyRequestException::class)
+    @ExceptionHandler(InvalidLottoNumbersException::class)
     fun handleInvalidLottoBuyRequestException() = INVALID_LOTTO_BUY_REQUEST
-
-    @ExceptionHandler(FrequentRequestException::class)
-    fun handleFrequentRequestException() = FREQUENT_REQUEST
 
     // validation 예외 처리
     @ExceptionHandler(ConstraintViolationException::class)
     fun handleConstraintViolationException(e: ConstraintViolationException) =
-        ResponseEntity(HttpErrorResponse(HttpStatus.BAD_REQUEST, e.localizedMessage), HttpStatus.BAD_REQUEST)
+        HttpErrorResponse.toResponseEntity(e)
 
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun handleConstraintViolationException(e: MethodArgumentNotValidException) =
-        ResponseEntity(HttpErrorResponse(HttpStatus.BAD_REQUEST, e.localizedMessage), HttpStatus.BAD_REQUEST)
+        HttpErrorResponse.toResponseEntity(e)
 }
