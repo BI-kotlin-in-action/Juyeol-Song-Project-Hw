@@ -1,7 +1,6 @@
 package com.example.lottoweb.controller
 
 import com.example.lottoweb.service.WinningRecordService
-import com.example.lottoweb.utils.annotation.CoolDown
 import jakarta.validation.constraints.Positive
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
@@ -32,7 +31,6 @@ class WinningRecordController(
      * round에 해당하는 로또 당첨 번호를 반환한다.
      * @param round 로또 회차
      */
-    @CoolDown
     @GetMapping
     fun getWinningRecordByRound(
         @Positive
