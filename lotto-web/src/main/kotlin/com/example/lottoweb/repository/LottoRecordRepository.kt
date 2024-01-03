@@ -18,7 +18,7 @@ interface LottoRecordRepository : JpaRepository<LottoRecord, LottoRecordId> {
 
     @Query(
         """
-        SELECT new com.example.lottoweb.dto.LottoRecordResponse(lr.round, lr.currentCounterOfThisRound, u.username, l.numbersAsString) 
+        SELECT new com.example.lottoweb.dto.LottoRecordResponse(lr.round, lr.currentCounterOfThisRound, u.username, l.lottoNumbers) 
         FROM lotto_record lr 
         JOIN lotto l ON lr.lottoRecordId.lottoId = l.lottoId
         JOIN user u ON lr.lottoRecordId.userId = u.userId
