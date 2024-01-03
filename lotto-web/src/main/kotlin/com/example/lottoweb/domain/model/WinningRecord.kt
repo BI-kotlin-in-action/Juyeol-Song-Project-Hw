@@ -1,6 +1,9 @@
 package com.example.lottoweb.domain.model
 
+import com.example.lottoweb.domain.LottoNumbers
+import com.example.lottoweb.utils.converter.LottoNumbersConverter
 import jakarta.persistence.Column
+import jakarta.persistence.Convert
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
@@ -17,11 +20,8 @@ data class WinningRecord(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "winning_record_id")
     val winningRecordId: Long,
-
     @Column(name = "round")
     val round: Int, // 회차
-
-    // DB에 영속화하는 과정에서 6개의 로또 숫자를 6개씩 따로 따로 저장하기 까다로워 문자열로 저장하였습니다. ( 구분자 ' ' )
-    @Column(name = "numbers_as_string")
-    val numbersAsString: String,
+    @Convert(converter = LottoNumbersConverter::class)
+    val lottoNumbers: LottoNumbers,
 )
