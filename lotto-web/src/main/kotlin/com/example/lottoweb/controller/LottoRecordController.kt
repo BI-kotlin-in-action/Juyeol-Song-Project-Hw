@@ -1,14 +1,11 @@
 package com.example.lottoweb.controller
 
-import com.example.lottoweb.dto.LottoRecordsResponse
 import com.example.lottoweb.service.LottoRecordService
-import com.example.lottoweb.utils.annotation.CoolDown
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Positive
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
@@ -30,18 +27,15 @@ class LottoRecordController(
      * @param round 조회할 회차
      * @return 유저의 로또 기록
      */
-    @CoolDown
-    @GetMapping("/username/{username}")
+    @GetMapping
     fun getUserLottosByRound(
         @NotBlank
-        @PathVariable // 조회를 위한 쿼리 파라미터로 들어가는게 더 좋았을까요?
+        @RequestParam("username")
         username: String,
         @Positive
         @RequestParam("round")
         round: Int,
-    ): ResponseEntity<LottoRecordsResponse> {
-        return ResponseEntity.ok(
-            lottoRecordService.getLottoRecordsByUsernameAndRound(username, round),
-        )
-    }
+    ) = ResponseEntity.ok(
+        lottoRecordService.getLottoRecordsByUsernameAndRound(username, round),
+    )
 }
