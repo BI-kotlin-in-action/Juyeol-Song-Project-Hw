@@ -19,15 +19,10 @@ data class HttpErrorResponse(
         @JvmStatic
         fun toResponseEntity(exception: Exception): ResponseEntity<HttpErrorResponse> {
             val statusCode = when (exception) {
-                is LoginMissingException -> BAD_REQUEST
-                is NotEnoughMoneyException -> BAD_REQUEST
-                is DuplicatedUsernameException -> BAD_REQUEST
-                is PasswordNotMatchException -> BAD_REQUEST
-                is InvalidLottoNumbersException -> BAD_REQUEST
-                is UsernameNotFoundException -> BAD_REQUEST
+                is HttpErrorException -> exception.statusCode // 커스텀 Http 예외
+                is MethodArgumentNotValidException -> BAD_REQUEST
                 is HttpMessageNotReadableException -> BAD_REQUEST
                 is ConstraintViolationException -> BAD_REQUEST
-                is MethodArgumentNotValidException -> BAD_REQUEST
                 else -> HttpStatus.INTERNAL_SERVER_ERROR
             }
 
