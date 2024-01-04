@@ -40,7 +40,7 @@ class LottoSchedulerService(
         // 이번 회차의 모든 로또 구매 작업이 끝날 때까지 대기
         while (queueWorkingCounterService.isNotCounterZero(capturedCurrentRound)) {}
 
-        // 이번 회차 queue 에 있는 모든 메시지를 처리
+        // 이번 회차 queue 에 있는 모든 작업을 처리
         for (lottoJob in getQueueByRound(capturedCurrentRound)) {
             resultRecordService.processResultRecords(lottoJob, winningRecordThisRound)
         }
