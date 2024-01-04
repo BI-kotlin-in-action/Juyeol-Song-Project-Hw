@@ -1,0 +1,64 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+plugins {
+    id 'org.springframework.boot' version '3.1.5'
+    id 'io.spring.dependency-management' version '1.1.3'
+    id 'org.jetbrains.kotlin.jvm' version '1.8.22'
+    id 'org.jetbrains.kotlin.plugin.spring' version '1.8.22'
+    id 'org.jetbrains.kotlin.plugin.jpa' version '1.8.22'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // 보안성 문제 해결
+    // It was discovered that SnakeYAML did not limit the maximal nested depth
+    // for collections when parsing YAML data. It was discovered that SnakeYAML did not limit the maximal data matched
+    // with regular expressions when parsing YAML data. - Source: USN-5944-1: SnakeYAML vulnerabilities -
+    implementation 'org.yaml:snakeyaml:2.2'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.1.5'
+    implementation 'org.springframework.boot:spring-boot-starter-security:3.1.5'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:3.1.2'
+    implementation 'org.springframework.boot:spring-boot-starter-web:3.1.5'
+    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.15.3'
+
+    // Spring boot 3.0 이상부터 권장하는 Swagger 종속성
+    // http://localhost:8080/swagger-ui/index.html 접근가능 (로그인 필요)
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
+
+    // Spring boot 2.3 이상 validation을 위한 종속성
+    implementation 'org.springframework.boot:spring-boot-starter-validation:2.5.4'
+
+    // 코틀린 reflection을 사용하기 위한 종속성
+    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.8.22'
+    runtimeOnly 'com.mysql:mysql-connector-j:8.0.33'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+jar {
+    enabled = false
+}
+
+tasks.withType(KotlinCompile) {
+    kotlinOptions {
+        freeCompilerArgs += '-Xjsr305=strict'
+        jvmTarget = '17'
+    }
+}
+
+tasks.named('bootBuildImage') {
+    builder = 'paketobuildpacks/builder-jammy-base:latest'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
