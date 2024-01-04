@@ -7,6 +7,7 @@ import com.example.lottoweb.exception.HttpErrorResponseConstants.Companion.NOT_E
 import com.example.lottoweb.exception.HttpErrorResponseConstants.Companion.PASSWORD_NOT_MATCHED
 import com.example.lottoweb.exception.HttpErrorResponseConstants.Companion.USERNAME_NOT_FOUND
 import org.hibernate.exception.ConstraintViolationException
+import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
@@ -35,6 +36,10 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(InvalidLottoNumbersException::class)
     fun handleInvalidLottoBuyRequestException() = INVALID_LOTTO_BUY_REQUEST
+
+    @ExceptionHandler(HttpMessageNotReadableException::class)
+    fun handleHttpMessageNotReadableException(e: HttpMessageNotReadableException) =
+        HttpErrorResponse.toResponseEntity(e)
 
     // validation 예외 처리
     @ExceptionHandler(ConstraintViolationException::class)
