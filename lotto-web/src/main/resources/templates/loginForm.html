@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인 페이지</title>
+</head>
+<body>
+<style>
+    .login-content {
+        width: 420px;
+        padding: 40px;
+        height: 300px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        position: absolute;
+        background: #FFF;
+        box-shadow: 0 0px 70px rgba(0, 0, 0, 0.1);
+        border-top: 5px solid #8f2f2f;
+        float: left;
+        -webkit-transition: all 0.2s ease-out;
+        transition: all 0.2s ease-out;
+        transition-delay: 0.2s;
+    }
+    form.login {
+        margin-top: 40px;
+
+        & input {
+            margin-top: 20px;
+            border: none;
+            border-bottom: 1px solid #8f2f2f;
+            border-radius: 0;
+            padding-left: 0;
+            box-shadow: none;
+            -webkit-transition: all 0.1s ease-out;
+            transition: all 0.1s ease-out;
+        }
+    }
+
+    a {
+        text-decoration: none;
+        color: #8f2f2f;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .ok {
+        display: inline-block;
+        float : right;
+        border: 2px solid #8f2f2f;
+        background: #8f2f2f;
+        border-radius: 25px;
+        padding: 3px 12px 5px 12px;
+        color: #fff;
+        font-size: 14px;
+        font-weight: bold;
+        letter-spacing: 0px;
+        -webkit-transition: all 0.1s ease-out;
+        transition: all 0.1s ease-out;
+    }
+
+</style>
+<form action="/login" method="POST" class="login">
+    <div >
+        <div class="login-content">
+            <h2>Login</h2>
+            <hr/>
+            <input type="text" name="username" placeholder="이름" required/><br>
+            <input type="password" id="password" name="password" placeholder="비밀번호" required/><br>
+            <br><br><br><br><br><br><br>
+            <a th:href="@{/signupform}">아직 회원이 아니신가요?</a>
+            <button class="ok">로그인</button>
+        </div>
+    </div>
+</form>
+<script th:inline="javascript">
+</script>
+</body>
+</html>
